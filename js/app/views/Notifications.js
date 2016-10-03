@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-function Requests(props) {
+function Notifications(props) {
   return (
     <View>
       <Text style={styles.title}>
-        Friend requests 👥
+        Notifications 🔴
       </Text>
     </View>
   );
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Requests;
+export default Notifications;

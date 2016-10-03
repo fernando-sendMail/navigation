@@ -1,33 +1,52 @@
 import React from 'react';
-import {
-  NavigationExperimental,
-  View
-} from 'react-native';
-
 import { connect } from 'react-redux';
+import { Animated, NavigationExperimental, StyleSheet, Text, View } from 'react-native';
+import { switchTab, pushState, goBack } from './actions';
+import { States } from './constants';
+import NewsfeedContainer from './containers/NewsfeedContainer';
+import RequestsContainer from './containers/RequestsContainer';
+import NotificationsContainer from './containers/NotificationsContainer';
+import MoreContainer from './containers/MoreContainer';
+import TabBar from './components/TabBar';
 
-const {
-  RootContainer
-} = NavigationExperimental;
+const { RootContainer, Transitioner: NavigationTransitioner } = NavigationExperimental;
 
-import {
-  switchTab,
-  pushState,
-  goBack
-} from './actions';
+function renderTab(props) {
+  const { route } = props.scene;
 
-const AppContainer = (props) => {
+  switch (route.key) {
+    case States.NEWSFEED:
+      return (<NewsfeedContainer {...props} />);
+    case States.REQUESTS:
+      return (<RequestsContainer {...props} />);
+    case States.NOTIFICATIONS:
+      return (<NotificationsContainer {...props} />);
+    case States.MORE:
+      return (<MoreContainer {...props} />);
+    default:
+      return (<Text>Hello</Text>);
+  }
+}
+
+function AppContainer(props){
   return (
-    <View>
-    </View>
-  )
+    <NavigationTransitioner
+      {...props}
+      render={ (navigationProps) => {
+        return (
+          <Animated.View style={styles.container}>
+            {renderTab({ ...navigationProps, onNavigateBack: props.onNavigateBack, onNewState: props.onNewState })}
+            <TabBar />
+          </Animated.View>
+        );
+      }}
+    />
+  );
 };
 
 function createOnNavigate(dispatch) {
   return (action) => {
-    if(action === RootContainer.getBackAction().type) {
-      dispatch(goBack());
-    }
+    dispatch(goBack());
   }
 }
 
@@ -39,8 +58,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onNavigate: createOnNavigate(dispatch)
+    onNavigateBack: createOnNavigate(dispatch),
+    onNewState: (state) => dispatch(pushState(state))
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

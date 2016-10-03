@@ -1,9 +1,10 @@
 import { Actions }  from '../constants';
 
-export const switchTab = (tab) => {
+export const switchTab = (tab, level = 'app') => {
   return {
     type: Actions.SWITCH_TAB,
-    tab
+    tab,
+    level
   };
 };
 
