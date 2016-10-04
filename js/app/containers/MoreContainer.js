@@ -48,7 +48,7 @@ function MoreContainer({ scenes, scene, onNavigateBack, onNewState }) {
       key={'stack_more'}
       navigationState={navigationState}
       renderScene={(props) => renderAnimatedContainer({ ...props, onNewState })}
-      renderOverlay={(props) => renderHeader({ ...props, onNavigateBack })}
+      renderHeader={(props) => renderHeader({ ...props, onNavigateBack })}
       onNavigateBack={onNavigateBack}
       enableGestures
     />

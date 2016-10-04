@@ -62,7 +62,7 @@ function Newsfeed({ scene, onNewState, onNavigateBack }) {
     <NavigationCardStack
       navigationState={navigationState}
       renderScene={(props) => renderAnimatedContainer({ ...props, onNewState })}
-      renderOverlay={(props) => renderHeader({ ...props, onNavigateBack })}
+      renderHeader={(props) => renderHeader({ ...props, onNavigateBack })}
       onNavigateBack={onNavigateBack}
       enableGestures
     />
@@ -71,8 +71,7 @@ function Newsfeed({ scene, onNewState, onNavigateBack }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 64
+    flex: 1
   }
 });
 
